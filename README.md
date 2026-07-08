@@ -1,85 +1,138 @@
-# PROYECTO-BASE-DE-DATOS
-Formando Campeones es un Sistema profesional de gestión de academias de fútbol
+# Football Academy Management System
 
-**Sistema integral de gestión de escuelas de fútbol en Oracle 12c con arquitectura de 4 capas**
+A professional football academy management system built on **Oracle Database 12c**, following a **four-layer enterprise architecture**.
 
-## 📋 Descripción General
+## 📋 Overview
 
-Formando Campeones es un sistema empresarial de gestión para academias de fútbol que implementa una **arquitectura de 4 capas** en Oracle 12c:
+**Football Academy Management System** is an enterprise-grade database application designed to manage the daily operations of football academies. The project follows a **four-layer architecture** that separates data, business logic, user access, and security to improve maintainability, scalability, and security.
 
-- **Capa 1 (DATA):** Tablas, restricciones, disparadores, índices y vistas
-- **Capa 2 (COMPONENTES):** Paquetes PL/SQL con lógica de negocio (PC_*, PK_*)
-- **Capa 3 (ACTORES):** Paquetes wrapper façade (PA_ADMINISTRADOR, PA_ENTRENADOR, PA_GERENTE)
-- **Capa 4 (SEGURIDAD):** Control de acceso basado en roles Oracle (C##ADMINISTRADOR, C##ENTRENADOR, C##GERENTE)
+### Architecture
 
-El sistema gestiona **escuelas, equipos, jugadores, entrenamientos, asistencia, inscripciones y pagos** con validaciones multinivel y control de acceso granular.
+* **Layer 1 – Data:** Tables, constraints, triggers, indexes, and views.
+* **Layer 2 – Business Components:** PL/SQL packages (`PC_*`, `PK_*`) implementing the business logic.
+* **Layer 3 – Actors:** Facade wrapper packages (`PA_ADMINISTRATOR`, `PA_COACH`, `PA_MANAGER`) responsible for transaction management and operation authorization.
+* **Layer 4 – Security:** Oracle role-based access control using dedicated roles (`C##ADMINISTRATOR`, `C##COACH`, `C##MANAGER`).
+
+The system manages **football academies, teams, players, training sessions, attendance, registrations, and payments**, while enforcing multi-level business validations and fine-grained access control.
 
 ---
 
-## 🎯 Características Principales
+# 🚀 Key Features
 
-### ✅ Funcionalidad Completa
+## Complete Management Modules
 
-| Módulo | Descripción |
-|--------|-------------|
-| **Gestión de Personas** | Registro de jugadores, entrenadores, administradores y acudientes |
-| **Escuelas y Equipos** | Creación de sedes, categorías de juego y equipos |
-| **Inscripciones** | Registro de jugadores en escuelas con estados (PENDIENTE, ACTIVA, RETIRADA) |
-| **Pagos** | Procesamiento de inscripciones con validación de montos y métodos |
-| **Entrenamientos** | Programación de sesiones con asistencia y observaciones automáticas |
-| **Reportes Gerenciales** | Informes de recaudos, demanda, asistencia y desempeño |
+| Module                  | Description                                                                                   |
+| ----------------------- | --------------------------------------------------------------------------------------------- |
+| **People Management**   | Register and manage players, coaches, administrators, and guardians.                          |
+| **Academies & Teams**   | Create academy branches, age categories, and football teams.                                  |
+| **Player Registration** | Register players with enrollment statuses such as **PENDING**, **ACTIVE**, and **WITHDRAWN**. |
+| **Payment Management**  | Process registration payments with amount validation and multiple payment methods.            |
+| **Training Sessions**   | Schedule training sessions, record attendance, and generate observations automatically.       |
+| **Management Reports**  | Generate reports for revenue, attendance, player demand, and overall academy performance.     |
 
-### 🔐 Seguridad Multinivel
+---
 
+# 🔐 Four-Layer Security Architecture
+
+```text
+┌────────────────────────────────────────────────────────────┐
+│ Layer 4 – Oracle Security Roles                           │
+│ (C##ADMINISTRATOR, C##COACH, C##MANAGER)                  │
+└────────────────────────────────────────────────────────────┘
+                           │
+                           ▼
+┌────────────────────────────────────────────────────────────┐
+│ Layer 3 – Actor Packages                                  │
+│ (PA_ADMINISTRATOR, PA_COACH, PA_MANAGER)                  │
+│ • Transaction management                                  │
+│ • Authorization and controlled access                     │
+└────────────────────────────────────────────────────────────┘
+                           │
+                           ▼
+┌────────────────────────────────────────────────────────────┐
+│ Layer 2 – Business Components                             │
+│ (PC_PERSON, PK_*, etc.)                                   │
+│ • Business rules                                          │
+│ • Data processing                                         │
+│ • Validation logic                                        │
+└────────────────────────────────────────────────────────────┘
+                           │
+                           ▼
+┌────────────────────────────────────────────────────────────┐
+│ Layer 1 – Data Layer                                      │
+│ • 13 relational tables                                    │
+│ • Constraints                                              │
+│ • Triggers                                                 │
+│ • Indexes                                                  │
+│ • Views                                                    │
+└────────────────────────────────────────────────────────────┘
 ```
-┌─────────────────────────────────────────────┐
-│ Capa 4: Roles Oracle (C##ADMINISTRADOR, etc) │
-└─────────────────────────────────────────────┘
-                     ↓
-┌─────────────────────────────────────────────┐
-│ Capa 3: Actores (PA_ADMINISTRADOR, etc)     │
-│ - Control de transacciones                   │
-│ - Autorización de operaciones                │
-└─────────────────────────────────────────────┘
-                     ↓
-┌─────────────────────────────────────────────┐
-│ Capa 2: Componentes (PC_PERSONA, etc)      │
-│ - Validaciones de negocio                    │
-│ - Procesamiento de datos                     │
-└─────────────────────────────────────────────┘
-                     ↓
-┌─────────────────────────────────────────────┐
-│ Capa 1: Data (13 tablas con restricciones) │
-│ - Check constraints                          │
-│ - Disparadores automáticos                   │
-│ - Cascadas de eliminación                    │
-└─────────────────────────────────────────────┘
-```
 
-### 📊 Modelo de Datos (13 Tablas)
+---
 
-**Personas:**
-- `Persona` - Datos demográficos base
-- `Jugador` - Posición y número de camiseta
-- `Acudiente` - Guardián del jugador
-- `Administrador` - Personal administrativo
-- `Entrenador` - Staff de entrenamiento
+# 🗄️ Database Model
 
-**Institucionales:**
-- `Escuela` - Sedes de la academia
-- `Categoria` - Categorías de edad (SUB10, SUB12, etc)
-- `Equipo` - Grupos de jugadores
+The database consists of **13 relational tables**, organized into three functional domains.
 
-**Operacional:**
-- `Inscripcion` - Registro de jugador en escuela
-- `Pago` - Transacciones (EFECTIVO, TRANSFERENCIA, TARJETA)
-- `Entrenamiento` - Sesiones de entrenamiento
-- `Participante` - Asistencia individual
-- `Recibe` - Asistencia grupal
+## People
 
-### 🔄 Transaccionalidad Automática
+* `Person` — Stores general personal information.
+* `Player` — Player-specific information such as position and jersey number.
+* `Guardian` — Parent or legal guardian information.
+* `Administrator` — Administrative staff.
+* `Coach` — Coaching staff.
 
-Cada operación en la capa ACTORES gestiona automáticamente:
-- ✅ **COMMIT** en éxito
-- ↩️ **ROLLBACK** en error
-- 🚨 **Errores específicos** (-20000 a -20099)
+## Organizational
+
+* `Academy` — Football academy branches.
+* `Category` — Age divisions (U10, U12, U14, etc.).
+* `Team` — Player teams within each category.
+
+## Operational
+
+* `Registration` — Player enrollment records.
+* `Payment` — Registration payment transactions.
+* `Training` — Training session scheduling.
+* `Participant` — Individual attendance records.
+* `Receives` — Group attendance relationships.
+
+---
+
+# 🔄 Automatic Transaction Management
+
+Every operation executed through the **Actor Layer** automatically handles database transactions by providing:
+
+* ✅ Automatic **COMMIT** on successful operations.
+* ↩️ Automatic **ROLLBACK** whenever an error occurs.
+* 🚨 Custom Oracle exceptions using error codes ranging from **-20000** to **-20099**.
+* 🔒 Consistent enforcement of business rules across all modules.
+
+---
+
+# 🛠️ Technologies
+
+* **Oracle Database 12c**
+* **PL/SQL**
+* **Oracle SQL**
+* **Oracle Roles & Privileges**
+* **Stored Procedures**
+* **Packages**
+* **Triggers**
+* **Views**
+* **Indexes**
+* **Check Constraints**
+
+---
+
+# 📌 Design Principles
+
+This project was designed following enterprise database development best practices:
+
+* Layered architecture.
+* Separation of concerns.
+* Encapsulation through PL/SQL packages.
+* Role-based security.
+* Centralized business rules.
+* Automatic transaction management.
+* Data integrity through constraints and triggers.
+* Modular and maintainable database components.
